@@ -1,0 +1,54 @@
+<div class="card shadow-sm">
+  <div class="card-header bg-dark text-white">
+    <h5 class="mb-0">{{ isEdit ? 'Sửa Fashion' : 'Thêm mới Fashion' }}</h5>
+  </div>
+  <div class="card-body">
+
+    <div class="mb-3">
+      <label class="form-label fw-bold">Tiêu đề</label>
+      <input type="text" class="form-control" [(ngModel)]="fashion.title" placeholder="Nhập tiêu đề..." />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label fw-bold">Thumbnail</label>
+      
+      <div class="d-flex align-items-center gap-2 mb-2">
+        <input type="file" #fileInput (change)="onFileSelected($event)" style="display: none;" accept="image/*">
+        
+        <button class="btn btn-outline-primary" (click)="fileInput.click()">
+          <i class="bi bi-upload"></i> Tải ảnh lên
+        </button>
+        
+        <button *ngIf="fashion.thumbnail" class="btn btn-outline-danger" (click)="removeImage()">
+          <i class="bi bi-trash"></i> Xóa ảnh
+        </button>
+      </div>
+
+      <div *ngIf="fashion.thumbnail" class="mt-2 position-relative d-inline-block">
+        <img [src]="fashion.thumbnail" class="rounded border shadow-sm" height="150" style="object-fit:cover;" />
+      </div>
+      
+      <!-- Hidden input just to store the URL if needed, or remove completely -->
+      <!-- <input type="hidden" [(ngModel)]="fashion.thumbnail"> -->
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label fw-bold">Style</label>
+      <select class="form-select" [(ngModel)]="fashion.style">
+        <option value="">-- Chọn Style --</option>
+        <option *ngFor="let s of styles" [value]="s">{{ s }}</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label fw-bold">Chi tiết (Details)</label>
+      <div id="detailsEditor" style="height: 300px;"></div>
+    </div>
+
+    <div class="d-flex gap-2">
+      <button class="btn btn-primary" (click)="saveFashion()">💾 Lưu</button>
+      <a routerLink="/list" class="btn btn-secondary">Hủy</a>
+    </div>
+
+  </div>
+</div>

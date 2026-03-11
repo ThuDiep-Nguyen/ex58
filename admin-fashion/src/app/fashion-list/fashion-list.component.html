@@ -1,0 +1,47 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h4>Danh sách Fashion</h4>
+  <a routerLink="/form" class="btn btn-success">+ Thêm mới</a>
+</div>
+
+<div class="alert alert-success" *ngIf="successMsg">{{ successMsg }}</div>
+<div class="alert alert-danger" *ngIf="errorMsg">{{ errorMsg }}</div>
+
+<table class="table table-bordered table-hover bg-white shadow-sm">
+  <thead class="table-dark">
+    <tr>
+      <th>#</th>
+      <th>Hình ảnh</th>
+      <th>Tiêu đề</th>
+      <th>Style</th>
+      <th>Ngày tạo</th>
+      <th>Hành động</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let fashion of fashions; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>
+        <img [src]="fashion.thumbnail" width="60" height="60"
+          style="object-fit:cover; border-radius:6px;" 
+          onerror="this.src='https://placehold.co/60x60?text=No+Img'"/>
+      </td>
+      <td>{{ fashion.title }}</td>
+      <td><span class="badge bg-secondary">{{ fashion.style }}</span></td>
+      <td>{{ fashion.createdAt | date:'dd/MM/yyyy' }}</td>
+      <td>
+        <a [routerLink]="['/detail', fashion._id]" class="btn btn-sm btn-info text-white me-1">
+          <i class="bi bi-eye"></i> Xem
+        </a>
+        <a [routerLink]="['/form', fashion._id]" class="btn btn-sm btn-warning me-1">
+          <i class="bi bi-pencil"></i> Sửa
+        </a>
+        <button class="btn btn-sm btn-danger" (click)="deleteFashion(fashion._id!)">
+          <i class="bi bi-trash"></i> Xóa
+        </button>
+      </td>
+    </tr>
+    <tr *ngIf="fashions.length === 0">
+      <td colspan="6" class="text-center text-muted">Không có dữ liệu</td>
+    </tr>
+  </tbody>
+</table>
